@@ -1,25 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import PostForm from './components/PostForm';
-import Feed from './components/Feed';
-import FriendsList from './components/FriendsList';
-import FriendRequests from './components/FriendRequests';
-import UserSearch from './components/UserSearch';
-import BusinessPageList from './components/BusinessPageList';
-import BusinessPageForm from './components/BusinessPageForm';
-import ProductList from './components/ProductList';
-import ProductForm from './components/ProductForm';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import BlogPage from './pages/BlogPage';
+import MarketplacePage from './pages/MarketplacePage';
 import BlogPostList from './components/BlogPostList';
-import BlogPostForm from './components/BlogPostForm';
-import Chat from './components/Chat';
+import ProductList from './components/ProductList';
+import Feed from './components/Feed';
 
 const App: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [refreshBusinessPages, setRefreshBusinessPages] = useState(false);
-  const [refreshProducts, setRefreshProducts] = useState(false);
-  const [refreshBlogPosts, setRefreshBlogPosts] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -73,57 +65,47 @@ const App: React.FC = () => {
     setToken(null);
   };
 
-  const handleSuccess = (setter: React.Dispatch<React.SetStateAction<boolean>>) => {
-    setter(prev => !prev);
-  }
-
   return (
-    <div>
-      <h1>Inside Riverside</h1>
-      {!token ? (
-        <div>
-          <form onSubmit={handleSignup}>
-            <h2>Sign Up</h2>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-            <button type="submit">Sign Up</button>
-          </form>
-          <form onSubmit={handleLogin}>
-            <h2>Login</h2>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-            <button type="submit">Login</button>
-          </form>
-        </div>
-      ) : (
-        <div>
-          <button onClick={handleLogout}>Logout</button>
-          <hr />
-          <Chat />
-          <hr />
-          <PostForm />
-          <hr />
-          <FriendsList />
-          <FriendRequests />
-          <UserSearch />
-          <hr />
-          <BusinessPageForm onSuccess={() => handleSuccess(setRefreshBusinessPages)} />
-          <hr />
-          <ProductForm onSuccess={() => handleSuccess(setRefreshProducts)} />
-          <hr />
-          <BlogPostForm onSuccess={() => handleSuccess(setRefreshBlogPosts)} />
-        </div>
-      )}
-      <hr />
-      <BusinessPageList key={`business-${refreshBusinessPages}`} />
-      <hr />
-      <ProductList key={`products-${refreshProducts}`} />
-      <hr />
-      <BlogPostList key={`blog-${refreshBlogPosts}`} />
-      <hr />
-      <Feed />
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/blog">Blog</Link></li>
+            <li><Link to="/market">Marketplace</Link></li>
+          </ul>
+        </nav>
+
+        <h1>Inside Riverside</h1>
+        {!token ? (
+          <div>
+            <form onSubmit={handleSignup}>
+              <h2>Sign Up</h2>
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+              <button type="submit">Sign Up</button>
+            </form>
+            <form onSubmit={handleLogin}>
+              <h2>Login</h2>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+              <button type="submit">Login</button>
+            </form>
+          </div>
+        ) : (
+          <div>
+            <button onClick={handleLogout}>Logout</button>
+            <hr />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/market" element={<MarketplacePage />} />
+            </Routes>
+          </div>
+        )}
+      </div>
+    </Router>
   );
 };
 
