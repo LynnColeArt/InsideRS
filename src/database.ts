@@ -1,11 +1,20 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
+  // It's best practice to use environment variables for database credentials.
   connectionString: process.env.DATABASE_URL,
 });
 
-const postMaxLength = process.env.POST_MAX_LENGTH || 300;
+// The maximum character length for posts is configurable.
+// We'll parse it as an integer and provide a default value.
+const postMaxLength = parseInt(process.env.POST_MAX_LENGTH || '300', 10);
 
+if (isNaN(postMaxLength)) {
+  throw new Error('POST_MAX_LENGTH must be a valid number.');
+}
+
+// This function creates the database tables if they don't already exist.
+// In a production environment, this should be handled by a separate migration script.
 const createTables = async () => {
   const client = await pool.connect();
   try {

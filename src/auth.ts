@@ -4,8 +4,16 @@ import jwt from 'jsonwebtoken';
 import db from './database';
 
 const router = express.Router();
+
+// Using a salt round of 10 is a good balance between security and performance.
 const saltRounds = 10;
-const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret';
+
+// It's crucial to use a strong, unique secret for signing JWTs.
+// We'll throw an error if it's not set in the environment variables.
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET is not set in the environment variables.');
+}
+const jwtSecret = process.env.JWT_SECRET;
 
 router.post('/signup', async (req, res) => {
   const { username, email, password } = req.body;
