@@ -10,12 +10,14 @@ const MarketplacePage: React.FC = () => {
     }
 
   return (
-    <div>
-      <h1>Marketplace</h1>
-      <p>Buy and sell goods with your neighbors.</p>
-      <hr />
+    <div className="container mx-auto p-4">
+      <div className="bg-container p-6 rounded-lg border border-border">
+        <h1 className="text-3xl font-bold text-accent mb-2">Marketplace</h1>
+        <p>Buy and sell goods with your neighbors.</p>
+      </div>
+      <hr className="border-border my-4" />
       <ProductForm onSuccess={handleSuccess} />
-      <hr />
+      <hr className="border-border my-4" />
       <ProductList key={`products-${refreshProducts}`} />
     </div>
   );

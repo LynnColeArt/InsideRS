@@ -81,18 +81,30 @@ const Feed: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="space-y-4">
       {posts.map((post) => (
-        <div key={post.id}>
-          <p>{post.content}</p>
-          <small>Posted at: {new Date(post.created_at).toLocaleString()}</small>
-          <div>
-            <span>Likes: {post.likes}</span>
-            <button onClick={() => handleLike(post.id)}>Like</button>
-          </div>
-          <div>
-            <span>Shares: {post.shares}</span>
-            <button onClick={() => handleShare(post.id)}>Share</button>
+        <div key={post.id} className="bg-container p-4 rounded-lg border border-border">
+          <p className="mb-2">{post.content}</p>
+          <small className="text-gray-400">Posted at: {new Date(post.created_at).toLocaleString()}</small>
+          <div className="flex justify-end space-x-4 mt-2">
+            <div className="flex items-center space-x-2">
+              <span>{post.likes}</span>
+              <button
+                onClick={() => handleLike(post.id)}
+                className="bg-accent text-white font-bold py-1 px-3 rounded hover:opacity-90 text-sm"
+              >
+                Like
+              </button>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span>{post.shares}</span>
+              <button
+                onClick={() => handleShare(post.id)}
+                className="bg-accent text-white font-bold py-1 px-3 rounded hover:opacity-90 text-sm"
+              >
+                Share
+              </button>
+            </div>
           </div>
         </div>
       ))}
