@@ -37,14 +37,20 @@ const PostForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="bg-container p-6 rounded-lg border border-border">
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="What's on your mind?"
         maxLength={postMaxLength}
+        className="w-full p-2 mb-4 bg-background border border-border rounded"
       />
-      <button type="submit">Post</button>
+      <button
+        type="submit"
+        className="w-full bg-accent text-white font-bold py-2 px-4 rounded hover:opacity-90"
+      >
+        Post
+      </button>
     </form>
   );
 };

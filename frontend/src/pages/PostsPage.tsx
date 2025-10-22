@@ -10,11 +10,13 @@ const PostsPage: React.FC = () => {
     }
 
   return (
-    <div>
-      <h2>Posts</h2>
-      <hr />
+    <div className="container mx-auto p-4">
+      <div className="bg-container p-6 rounded-lg border border-border">
+        <h2 className="text-3xl font-bold text-accent mb-2">Posts</h2>
+      </div>
+      <hr className="border-border my-4" />
       <PostForm onSuccess={handleSuccess} />
-      <hr />
+      <hr className="border-border my-4" />
       <Feed key={`feed-${refreshFeed}`} />
     </div>
   );

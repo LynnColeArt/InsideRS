@@ -66,7 +66,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div>
+      <div className="bg-background text-text font-sans min-h-screen">
         <NavigationBar
           token={token}
           handleSignup={handleSignup}

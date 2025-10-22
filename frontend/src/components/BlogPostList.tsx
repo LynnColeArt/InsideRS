@@ -29,15 +29,15 @@ const BlogPostList: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h3>Blog Posts</h3>
+    <div className="space-y-4">
+      <h3 className="text-2xl font-bold text-accent">Blog Posts</h3>
       {posts.length > 0 ? (
-        <ul>
+        <ul className="space-y-4">
           {posts.map((post) => (
-            <li key={post.id}>
-              <h4>{post.title}</h4>
-              <p>{post.content}</p>
-              <small>by {post.author.username}</small>
+            <li key={post.id} className="bg-container p-4 rounded-lg border border-border">
+              <h4 className="text-xl font-bold text-accent mb-2">{post.title}</h4>
+              <p className="mb-2">{post.content}</p>
+              <small className="text-gray-400">by {post.author.username}</small>
             </li>
           ))}
         </ul>

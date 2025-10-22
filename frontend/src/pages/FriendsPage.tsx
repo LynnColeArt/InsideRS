@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import FriendsList from '../components/FriendsList';
+import FriendRequests from '../components/FriendRequests';
+import UserSearch from '../components/UserSearch';
 
 const FriendsPage: React.FC = () => {
+    const [refreshFriends, setRefreshFriends] = useState(false);
+
+    const handleSuccess = () => {
+        setRefreshFriends(prev => !prev);
+    }
+
   return (
-    <div>
-      <h2>Friends Page</h2>
-      <p>Welcome to the Friends page. This section is under construction.</p>
+    <div className="container mx-auto p-4">
+      <div className="bg-container p-6 rounded-lg border border-border">
+        <h2 className="text-3xl font-bold text-accent mb-2">Friends</h2>
+      </div>
+      <hr className="border-border my-4" />
+      <UserSearch onSuccess={handleSuccess} />
+      <hr className="border-border my-4" />
+      <FriendRequests onSuccess={handleSuccess} />
+      <hr className="border-border my-4" />
+      <FriendsList key={`friends-${refreshFriends}`} />
     </div>
   );
 };

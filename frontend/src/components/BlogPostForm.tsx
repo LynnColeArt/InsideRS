@@ -41,28 +41,36 @@ const BlogPostForm: React.FC<BlogPostFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Create a Blog Post</h3>
+    <form onSubmit={handleSubmit} className="bg-container p-6 rounded-lg border border-border">
+      <h3 className="text-2xl font-bold text-accent mb-4">Create a Blog Post</h3>
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         required
+        className="w-full p-2 mb-4 bg-background border border-border rounded"
       />
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Content"
         required
+        className="w-full p-2 mb-4 bg-background border border-border rounded"
       />
       <input
         type="text"
         value={tags}
         onChange={(e) => setTags(e.target.value)}
         placeholder="Tags (comma-separated)"
+        className="w-full p-2 mb-4 bg-background border border-border rounded"
       />
-      <button type="submit">Create Post</button>
+      <button
+        type="submit"
+        className="w-full bg-accent text-white font-bold py-2 px-4 rounded hover:opacity-90"
+      >
+        Create Post
+      </button>
     </form>
   );
 };
