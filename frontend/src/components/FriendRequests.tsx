@@ -5,7 +5,11 @@ interface FriendRequest {
   username: string;
 }
 
-const FriendRequests: React.FC = () => {
+interface FriendRequestsProps {
+  onSuccess: () => void;
+}
+
+const FriendRequests: React.FC<FriendRequestsProps> = ({ onSuccess }) => {
   const [requests, setRequests] = useState<FriendRequest[]>([]);
 
   const fetchRequests = async () => {
@@ -40,7 +44,7 @@ const FriendRequests: React.FC = () => {
       });
       if (response.ok) {
         fetchRequests(); // Refresh the requests list
-        // You might also want to trigger a refresh of the main friends list
+        onSuccess(); // Refresh the main friends list
       } else {
         alert('Failed to accept friend request.');
       }
@@ -50,13 +54,18 @@ const FriendRequests: React.FC = () => {
   };
 
   return (
-    <div>
-      <h3>Friend Requests</h3>
-      <ul>
+    <div className="bg-container p-6 rounded-lg border border-border">
+      <h3 className="text-2xl font-bold text-accent mb-4">Friend Requests</h3>
+      <ul className="space-y-2">
         {requests.map((request) => (
-          <li key={request.id}>
-            {request.username}
-            <button onClick={() => handleAcceptRequest(request.id)}>Accept</button>
+          <li key={request.id} className="flex justify-between items-center">
+            <span>{request.username}</span>
+            <button
+              onClick={() => handleAcceptRequest(request.id)}
+              className="bg-accent text-white font-bold py-1 px-3 rounded hover:opacity-90 text-sm"
+            >
+              Accept
+            </button>
           </li>
         ))}
       </ul>

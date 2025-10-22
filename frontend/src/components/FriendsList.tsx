@@ -49,13 +49,18 @@ const FriendsList: React.FC = () => {
   };
 
   return (
-    <div>
-      <h3>Friends</h3>
-      <ul>
+    <div className="bg-container p-6 rounded-lg border border-border">
+      <h3 className="text-2xl font-bold text-accent mb-4">Friends</h3>
+      <ul className="space-y-2">
         {friends.map((friend) => (
-          <li key={friend.id}>
-            {friend.username}
-            <button onClick={() => handleRemoveFriend(friend.id)}>Remove</button>
+          <li key={friend.id} className="flex justify-between items-center">
+            <span>{friend.username}</span>
+            <button
+              onClick={() => handleRemoveFriend(friend.id)}
+              className="bg-accent text-white font-bold py-1 px-3 rounded hover:opacity-90 text-sm"
+            >
+              Remove
+            </button>
           </li>
         ))}
       </ul>
