@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 
-const postMaxLength = process.env.POST_MAX_LENGTH || 300;
+interface PostFormProps {
+  onSuccess?: () => void;
+}
 
-const PostForm: React.FC = () => {
+const resolveMaxLength = () => {
+  const rawValue = import.meta.env.VITE_POST_MAX_LENGTH;
+  const parsedValue = rawValue ? Number(rawValue) : Number.NaN;
+  return Number.isFinite(parsedValue) ? parsedValue : 300;
+};
+
+const PostForm: React.FC<PostFormProps> = ({ onSuccess }) => {
   const [content, setContent] = useState('');
+  const postMaxLength = resolveMaxLength();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +34,7 @@ const PostForm: React.FC = () => {
 
       if (response.ok) {
         setContent('');
+        onSuccess?.();
         // You might want to trigger a refresh of the feed here
       } else {
         const message = await response.text();

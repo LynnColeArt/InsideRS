@@ -5,7 +5,11 @@ interface User {
   username: string;
 }
 
-const UserSearch: React.FC = () => {
+interface UserSearchProps {
+  onSuccess?: () => void;
+}
+
+const UserSearch: React.FC<UserSearchProps> = ({ onSuccess }) => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
@@ -40,6 +44,7 @@ const UserSearch: React.FC = () => {
       });
       if (response.ok) {
         alert('Friend request sent!');
+        onSuccess?.();
       } else {
         const message = await response.text();
         alert(`Failed to send friend request: ${message}`);

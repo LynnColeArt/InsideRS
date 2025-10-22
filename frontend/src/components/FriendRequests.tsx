@@ -5,7 +5,11 @@ interface FriendRequest {
   username: string;
 }
 
-const FriendRequests: React.FC = () => {
+interface FriendRequestsProps {
+  onSuccess?: () => void;
+}
+
+const FriendRequests: React.FC<FriendRequestsProps> = ({ onSuccess }) => {
   const [requests, setRequests] = useState<FriendRequest[]>([]);
 
   const fetchRequests = async () => {
@@ -40,6 +44,7 @@ const FriendRequests: React.FC = () => {
       });
       if (response.ok) {
         fetchRequests(); // Refresh the requests list
+        onSuccess?.();
         // You might also want to trigger a refresh of the main friends list
       } else {
         alert('Failed to accept friend request.');
