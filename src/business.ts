@@ -28,7 +28,7 @@ router.post('/', authenticateJWT, async (req: AuthenticatedRequest, res) => {
 });
 
 // Get all business pages
-router.get('/', async (req, res) => {
+router.get('/', authenticateJWT, async (req, res) => {
     const query = 'SELECT * FROM business_pages';
     try {
         const result = await db.query(query);
@@ -40,7 +40,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a specific business page
-router.get('/:id', async (req, res) => {
+router.get('/:id', authenticateJWT, async (req, res) => {
     const pageId = req.params.id;
     const query = 'SELECT * FROM business_pages WHERE id = $1';
     try {

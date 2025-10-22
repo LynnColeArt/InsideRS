@@ -33,7 +33,7 @@ router.post('/', authenticateJWT, async (req: AuthenticatedRequest, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateJWT, async (req, res) => {
   const query = `
     SELECT
       p.id,
