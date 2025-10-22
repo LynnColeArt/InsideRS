@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import BlogPage from './pages/BlogPage';
 import MarketplacePage from './pages/MarketplacePage';
-import BlogPostList from './components/BlogPostList';
-import ProductList from './components/ProductList';
-import Feed from './components/Feed';
+import BusinessPage from './pages/BusinessPage';
+import FriendsPage from './pages/FriendsPage';
+import PostsPage from './pages/PostsPage';
+import UsersPage from './pages/UsersPage';
+import NavigationBar from './components/NavigationBar';
 
 const App: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -20,7 +19,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent, username: string, email: string, password: string) => {
     e.preventDefault();
     try {
       const response = await fetch('/api/auth/signup', {
@@ -39,7 +38,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent, email: string, password: string) => {
     e.preventDefault();
     try {
       const response = await fetch('/api/auth/login', {
@@ -68,41 +67,22 @@ const App: React.FC = () => {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/blog">Blog</Link></li>
-            <li><Link to="/market">Marketplace</Link></li>
-          </ul>
-        </nav>
-
-        <h1>Inside Riverside</h1>
-        {!token ? (
-          <div>
-            <form onSubmit={handleSignup}>
-              <h2>Sign Up</h2>
-              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-              <button type="submit">Sign Up</button>
-            </form>
-            <form onSubmit={handleLogin}>
-              <h2>Login</h2>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-              <button type="submit">Login</button>
-            </form>
-          </div>
-        ) : (
-          <div>
-            <button onClick={handleLogout}>Logout</button>
-            <hr />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/market" element={<MarketplacePage />} />
-            </Routes>
-          </div>
+        <NavigationBar
+          token={token}
+          handleSignup={handleSignup}
+          handleLogin={handleLogin}
+          handleLogout={handleLogout}
+        />
+        {token && (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/market" element={<MarketplacePage />} />
+            <Route path="/business" element={<BusinessPage />} />
+            <Route path="/friends" element={<FriendsPage />} />
+            <Route path="/posts" element={<PostsPage />} />
+            <Route path="/users" element={<UsersPage />} />
+          </Routes>
         )}
       </div>
     </Router>
