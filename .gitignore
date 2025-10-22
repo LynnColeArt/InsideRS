@@ -1,2 +1,16 @@
-node_modules
-dist
+# Dependencies
+/node_modules
+
+# Production
+/dist
+
+# Logs
+npm-debug.log*
+server.log
+
+# Environment variables
+.env
+
+# Other
+.DS_Store
+coverage

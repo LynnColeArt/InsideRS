@@ -28,7 +28,7 @@ router.post('/', authenticateJWT, async (req: AuthenticatedRequest, res) => {
 });
 
 // Get all blog posts
-router.get('/', authenticateJWT, async (req, res) => {
+router.get('/', async (req, res) => {
     const query = 'SELECT * FROM blog_posts ORDER BY created_at DESC';
     try {
         const result = await db.query(query);
@@ -40,7 +40,7 @@ router.get('/', authenticateJWT, async (req, res) => {
 });
 
 // Get a specific blog post
-router.get('/:id', authenticateJWT, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const postId = req.params.id;
     const query = 'SELECT * FROM blog_posts WHERE id = $1';
     try {
