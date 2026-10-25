@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:18 AS builder
+FROM node:22.23.4 AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . .
 RUN npx tsc
 
 # Stage 2: Create the production image
-FROM node:18-slim
+FROM node:22.23.4-slim
 
 WORKDIR /app
 
